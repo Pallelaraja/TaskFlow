@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Nexus Tasks | Premium Productivity</title>
+<title>Aurora Tasks | Smart Productivity</title>
 
 <!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -22,13 +22,13 @@ body {
 
 /* Glassmorphism */
 .glass {
-    background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(14px);
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(16px);
 }
 
-/* Gradient Brand */
+/* New Gradient Brand */
 .gradient-primary {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #14b8a6, #10b981);
 }
 
 /* Hover lift */
@@ -37,7 +37,7 @@ body {
 }
 .hover-lift:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 35px -10px rgba(99,102,241,.35);
+    box-shadow: 0 18px 30px -10px rgba(16,185,129,.35);
 }
 
 /* Fade animation */
@@ -45,20 +45,20 @@ body {
     animation: fadeUp .4s ease forwards;
 }
 @keyframes fadeUp {
-    from { opacity:0; transform: translateY(10px); }
+    from { opacity:0; transform: translateY(12px); }
     to { opacity:1; transform: translateY(0); }
 }
 
 /* Scrollbar */
 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #c7d2fe;
+    background: #5eead4;
     border-radius: 10px;
 }
 </style>
 </head>
 
-<body class="bg-gradient-to-br from-slate-50 to-indigo-50 text-slate-900">
+<body class="bg-gradient-to-br from-emerald-50 to-cyan-50 text-slate-900">
 
 <div class="flex min-h-screen relative overflow-hidden">
 
@@ -67,33 +67,35 @@ body {
 
 <!-- Sidebar -->
 <aside id="sidebar"
-class="fixed lg:static inset-y-0 left-0 w-72 glass border-r border-slate-200
+class="fixed lg:static inset-y-0 left-0 w-72 glass border-r border-emerald-100
 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl">
 
 <div class="flex flex-col h-full p-6">
 
 <!-- Logo -->
 <div class="flex items-center gap-3 mb-10">
-    <div class="w-10 h-10 rounded-2xl flex items-center justify-center gradient-primary shadow-xl">
-        <i data-lucide="check-circle-2" class="text-white"></i>
+    <div class="w-11 h-11 rounded-2xl flex items-center justify-center gradient-primary shadow-xl">
+        <i data-lucide="sparkles" class="text-white"></i>
     </div>
-    <span class="text-xl font-black tracking-tight uppercase italic">Nexus</span>
+    <span class="text-xl font-black tracking-tight uppercase italic text-emerald-700">
+        Aurora
+    </span>
 </div>
 
 <!-- Navigation -->
 <nav id="categoryNav" class="flex-1 space-y-2"></nav>
 
 <!-- Progress -->
-<div class="mt-auto pt-6 border-t">
-    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl p-5">
+<div class="mt-auto pt-6 border-t border-emerald-100">
+    <div class="bg-gradient-to-br from-emerald-100 to-cyan-100 rounded-3xl p-5">
         <div class="flex justify-between items-end">
-            <span class="text-xs font-bold text-indigo-600">Daily Goal</span>
-            <span id="progressPercent" class="text-lg font-black text-indigo-900">0%</span>
+            <span class="text-xs font-bold text-emerald-700">Daily Progress</span>
+            <span id="progressPercent" class="text-lg font-black text-emerald-900">0%</span>
         </div>
-        <div class="h-2 bg-indigo-100 rounded-full mt-3 overflow-hidden">
-            <div id="progressBar" class="h-full bg-indigo-600 transition-all"></div>
+        <div class="h-2 bg-emerald-200 rounded-full mt-3 overflow-hidden">
+            <div id="progressBar" class="h-full bg-emerald-600 transition-all"></div>
         </div>
-        <p id="progressStats" class="text-[10px] text-indigo-500 font-bold mt-2"></p>
+        <p id="progressStats" class="text-[10px] text-emerald-600 font-bold mt-2"></p>
     </div>
 </div>
 
@@ -104,17 +106,17 @@ z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-
 <main class="flex-1 flex flex-col overflow-hidden">
 
 <!-- Header -->
-<header class="h-20 glass border-b px-6 flex items-center gap-4 sticky top-0 z-30">
+<header class="h-20 glass border-b border-emerald-100 px-6 flex items-center gap-4 sticky top-0 z-30">
 
 <button id="menuBtn" class="lg:hidden p-2 rounded-xl hover:bg-white">
     <i data-lucide="menu"></i>
 </button>
 
 <div class="flex-1 max-w-xl relative">
-    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4"></i>
+    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400 w-4"></i>
     <input id="searchInput"
     placeholder="Search tasks..."
-    class="w-full bg-white rounded-2xl py-3 pl-11 pr-4 shadow focus:ring-4 focus:ring-indigo-300 outline-none">
+    class="w-full bg-white rounded-2xl py-3 pl-11 pr-4 shadow focus:ring-4 focus:ring-emerald-300 outline-none">
 </div>
 
 <button id="openModalBtn"
@@ -129,8 +131,8 @@ class="gradient-primary text-white font-bold px-5 py-3 rounded-2xl shadow-lg hov
 <div class="max-w-4xl mx-auto space-y-8">
 
 <div>
-    <h2 id="viewTitle" class="text-3xl font-black">All Tasks</h2>
-    <p id="viewSubtitle" class="text-slate-500 font-bold text-sm"></p>
+    <h2 id="viewTitle" class="text-3xl font-black text-emerald-900">All Tasks</h2>
+    <p id="viewSubtitle" class="text-emerald-600 font-bold text-sm"></p>
 </div>
 
 <div id="taskList" class="space-y-4"></div>
@@ -147,15 +149,15 @@ class="gradient-primary text-white font-bold px-5 py-3 rounded-2xl shadow-lg hov
 class="relative glass w-full max-w-xl rounded-[42px] shadow-2xl p-8 fade-in">
 
 <div class="flex justify-between mb-6">
-    <h2 id="modalTitle" class="text-2xl font-black">New Task</h2>
+    <h2 id="modalTitle" class="text-2xl font-black text-emerald-900">New Task</h2>
     <button type="button" id="closeModalBtn"><i data-lucide="x"></i></button>
 </div>
 
 <input id="formTitle" required placeholder="Task title"
-class="w-full text-xl font-bold border-b py-3 mb-4 bg-transparent outline-none">
+class="w-full text-xl font-bold border-b border-emerald-200 py-3 mb-4 bg-transparent outline-none">
 
 <textarea id="formDesc" placeholder="Notes"
-class="w-full border-b py-2 mb-4 bg-transparent outline-none resize-none"></textarea>
+class="w-full border-b border-emerald-200 py-2 mb-4 bg-transparent outline-none resize-none"></textarea>
 
 <div class="grid grid-cols-2 gap-4 mb-4">
 <select id="formCategory" class="bg-white rounded-xl p-3 font-bold">
@@ -169,7 +171,7 @@ class="w-full border-b py-2 mb-4 bg-transparent outline-none resize-none"></text
 
 <div class="flex gap-2 mb-6" id="prioritySelector">
 <button type="button" data-val="low" class="priority-btn flex-1 p-2 rounded-xl bg-slate-100">Low</button>
-<button type="button" data-val="medium" class="priority-btn flex-1 p-2 rounded-xl bg-indigo-100">Medium</button>
+<button type="button" data-val="medium" class="priority-btn flex-1 p-2 rounded-xl bg-emerald-100">Medium</button>
 <button type="button" data-val="high" class="priority-btn flex-1 p-2 rounded-xl bg-slate-100">High</button>
 </div>
 
@@ -191,10 +193,10 @@ let tasks=[
 let activeCategory='all',searchQuery='',editingId=null,selectedPriority='medium';
 
 const CATEGORIES=[
-{id:'all',name:'All Tasks',icon:'layout'},
-{id:'work',name:'Work',icon:'briefcase'},
-{id:'personal',name:'Personal',icon:'user'},
-{id:'leisure',name:'Leisure',icon:'coffee'}
+{id:'all',name:'All Tasks'},
+{id:'work',name:'Work'},
+{id:'personal',name:'Personal'},
+{id:'leisure',name:'Leisure'}
 ];
 
 const taskList=document.getElementById('taskList'),
@@ -214,7 +216,7 @@ openModalBtn.onclick=()=>openModal();
 closeModalBtn.onclick=()=>closeModal();
 modalBackdrop.onclick=()=>closeModal();
 searchInput.oninput=e=>{searchQuery=e.target.value;renderTasks();};
-priorityBtns.forEach(b=>b.onclick=()=>{selectedPriority=b.dataset.val;updatePriorityUI();});
+priorityBtns.forEach(b=>b.onclick=()=>{selectedPriority=b.dataset.val;});
 taskForm.onsubmit=e=>{e.preventDefault();saveTask();};
 }
 
@@ -227,25 +229,29 @@ function renderNav(){
 categoryNav.innerHTML='';
 CATEGORIES.forEach(c=>{
 const b=document.createElement('button');
-b.className=`hover-lift w-full flex justify-between px-4 py-3 rounded-2xl font-bold ${activeCategory===c.id?'gradient-primary text-white':'bg-white'}`;
+b.className=`hover-lift w-full flex justify-between px-4 py-3 rounded-2xl font-bold 
+${activeCategory===c.id?'gradient-primary text-white':'bg-white text-emerald-700'}`;
 b.onclick=()=>{activeCategory=c.id;renderNav();renderTasks();};
 b.innerHTML=`<span>${c.name}</span><span>${getTaskCount(c.id)}</span>`;
 categoryNav.appendChild(b);
 });
 }
 
-function getTaskCount(id){return id==='all'?tasks.length:tasks.filter(t=>t.category===id).length;}
+function getTaskCount(id){
+return id==='all'?tasks.length:tasks.filter(t=>t.category===id).length;
+}
 
 function renderTasks(){
 const f=tasks.filter(t=>(activeCategory==='all'||t.category===activeCategory)&&
-(t.title.toLowerCase().includes(searchQuery.toLowerCase())));
+t.title.toLowerCase().includes(searchQuery.toLowerCase()));
 viewTitle.textContent=CATEGORIES.find(c=>c.id===activeCategory).name;
 viewSubtitle.textContent=`${f.length} tasks`;
 taskList.innerHTML='';
 f.forEach(t=>{
 const d=document.createElement('div');
 d.className='fade-in bg-white rounded-3xl p-6 hover-lift';
-d.innerHTML=`<h3 class="font-bold">${t.title}</h3><p class="text-sm text-slate-500">${t.description}</p>`;
+d.innerHTML=`<h3 class="font-bold">${t.title}</h3>
+<p class="text-sm text-slate-500">${t.description}</p>`;
 taskList.appendChild(d);
 });
 updateProgress();
@@ -259,9 +265,8 @@ progressBar.style.width=p+'%';
 progressStats.textContent=`${c}/${tasks.length} completed`;
 }
 
-function openModal(id=null){editingId=id;modal.classList.remove('hidden');}
+function openModal(){modal.classList.remove('hidden');}
 function closeModal(){modal.classList.add('hidden');}
-function updatePriorityUI(){}
 
 function saveTask(){
 tasks.unshift({
@@ -280,3 +285,4 @@ init();
 </script>
 </body>
 </html>
+
