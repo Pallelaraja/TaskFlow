@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nexus Tasks | Premium Productivity</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism */
+.glass {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(14px);
+}
+
+/* Gradient Brand */
+.gradient-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+/* Hover lift */
+.hover-lift {
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 35px -10px rgba(99,102,241,.35);
+}
+
+/* Fade animation */
+.fade-in {
+    animation: fadeUp .4s ease forwards;
+}
+@keyframes fadeUp {
+    from { opacity:0; transform: translateY(10px); }
+    to { opacity:1; transform: translateY(0); }
+}
+
+/* Scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #c7d2fe;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-50 to-indigo-50 text-slate-900">
+
+<div class="flex min-h-screen relative overflow-hidden">
+
+<!-- Overlay -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar"
+class="fixed lg:static inset-y-0 left-0 w-72 glass border-r border-slate-200
+z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-xl">
+
+<div class="flex flex-col h-full p-6">
+
+<!-- Logo -->
+<div class="flex items-center gap-3 mb-10">
+    <div class="w-10 h-10 rounded-2xl flex items-center justify-center gradient-primary shadow-xl">
+        <i data-lucide="check-circle-2" class="text-white"></i>
+    </div>
+    <span class="text-xl font-black tracking-tight uppercase italic">Nexus</span>
+</div>
+
+<!-- Navigation -->
+<nav id="categoryNav" class="flex-1 space-y-2"></nav>
+
+<!-- Progress -->
+<div class="mt-auto pt-6 border-t">
+    <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl p-5">
+        <div class="flex justify-between items-end">
+            <span class="text-xs font-bold text-indigo-600">Daily Goal</span>
+            <span id="progressPercent" class="text-lg font-black text-indigo-900">0%</span>
+        </div>
+        <div class="h-2 bg-indigo-100 rounded-full mt-3 overflow-hidden">
+            <div id="progressBar" class="h-full bg-indigo-600 transition-all"></div>
+        </div>
+        <p id="progressStats" class="text-[10px] text-indigo-500 font-bold mt-2"></p>
+    </div>
+</div>
+
+</div>
+</aside>
+
+<!-- Main -->
+<main class="flex-1 flex flex-col overflow-hidden">
+
+<!-- Header -->
+<header class="h-20 glass border-b px-6 flex items-center gap-4 sticky top-0 z-30">
+
+<button id="menuBtn" class="lg:hidden p-2 rounded-xl hover:bg-white">
+    <i data-lucide="menu"></i>
+</button>
+
+<div class="flex-1 max-w-xl relative">
+    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4"></i>
+    <input id="searchInput"
+    placeholder="Search tasks..."
+    class="w-full bg-white rounded-2xl py-3 pl-11 pr-4 shadow focus:ring-4 focus:ring-indigo-300 outline-none">
+</div>
+
+<button id="openModalBtn"
+class="gradient-primary text-white font-bold px-5 py-3 rounded-2xl shadow-lg hover:opacity-90 flex items-center gap-2">
+<i data-lucide="plus"></i> New Task
+</button>
+
+</header>
+
+<!-- Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar px-6 py-8">
+<div class="max-w-4xl mx-auto space-y-8">
+
+<div>
+    <h2 id="viewTitle" class="text-3xl font-black">All Tasks</h2>
+    <p id="viewSubtitle" class="text-slate-500 font-bold text-sm"></p>
+</div>
+
+<div id="taskList" class="space-y-4"></div>
+
+</div>
+</div>
+</main>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+<div id="modalBackdrop" class="absolute inset-0 bg-black/60"></div>
+
+<form id="taskForm"
+class="relative glass w-full max-w-xl rounded-[42px] shadow-2xl p-8 fade-in">
+
+<div class="flex justify-between mb-6">
+    <h2 id="modalTitle" class="text-2xl font-black">New Task</h2>
+    <button type="button" id="closeModalBtn"><i data-lucide="x"></i></button>
+</div>
+
+<input id="formTitle" required placeholder="Task title"
+class="w-full text-xl font-bold border-b py-3 mb-4 bg-transparent outline-none">
+
+<textarea id="formDesc" placeholder="Notes"
+class="w-full border-b py-2 mb-4 bg-transparent outline-none resize-none"></textarea>
+
+<div class="grid grid-cols-2 gap-4 mb-4">
+<select id="formCategory" class="bg-white rounded-xl p-3 font-bold">
+<option value="work">Work</option>
+<option value="personal" selected>Personal</option>
+<option value="leisure">Leisure</option>
+</select>
+
+<input type="date" id="formDate" class="bg-white rounded-xl p-3 font-bold">
+</div>
+
+<div class="flex gap-2 mb-6" id="prioritySelector">
+<button type="button" data-val="low" class="priority-btn flex-1 p-2 rounded-xl bg-slate-100">Low</button>
+<button type="button" data-val="medium" class="priority-btn flex-1 p-2 rounded-xl bg-indigo-100">Medium</button>
+<button type="button" data-val="high" class="priority-btn flex-1 p-2 rounded-xl bg-slate-100">High</button>
+</div>
+
+<button type="submit"
+class="w-full gradient-primary text-white font-black py-4 rounded-3xl shadow-xl">
+Save Task
+</button>
+
+</form>
+</div>
+
+</div>
+
+<script>
+let tasks=[
+{id:1,title:"Plan project roadmap",description:"Define milestones",priority:"high",category:"work",dueDate:"2024-01-20",completed:false},
+{id:2,title:"Grocery run",description:"Get milk",priority:"medium",category:"personal",dueDate:"2024-01-21",completed:true}
+];
+let activeCategory='all',searchQuery='',editingId=null,selectedPriority='medium';
+
+const CATEGORIES=[
+{id:'all',name:'All Tasks',icon:'layout'},
+{id:'work',name:'Work',icon:'briefcase'},
+{id:'personal',name:'Personal',icon:'user'},
+{id:'leisure',name:'Leisure',icon:'coffee'}
+];
+
+const taskList=document.getElementById('taskList'),
+categoryNav=document.getElementById('categoryNav'),
+searchInput=document.getElementById('searchInput'),
+viewTitle=document.getElementById('viewTitle'),
+viewSubtitle=document.getElementById('viewSubtitle'),
+modal=document.getElementById('modal'),
+taskForm=document.getElementById('taskForm'),
+priorityBtns=document.querySelectorAll('.priority-btn');
+
+function init(){
+renderNav();renderTasks();lucide.createIcons();
+menuBtn.onclick=()=>toggleSidebar(true);
+sidebarOverlay.onclick=()=>toggleSidebar(false);
+openModalBtn.onclick=()=>openModal();
+closeModalBtn.onclick=()=>closeModal();
+modalBackdrop.onclick=()=>closeModal();
+searchInput.oninput=e=>{searchQuery=e.target.value;renderTasks();};
+priorityBtns.forEach(b=>b.onclick=()=>{selectedPriority=b.dataset.val;updatePriorityUI();});
+taskForm.onsubmit=e=>{e.preventDefault();saveTask();};
+}
+
+function toggleSidebar(o){
+sidebar.classList.toggle('-translate-x-full',!o);
+sidebarOverlay.classList.toggle('hidden',!o);
+}
+
+function renderNav(){
+categoryNav.innerHTML='';
+CATEGORIES.forEach(c=>{
+const b=document.createElement('button');
+b.className=`hover-lift w-full flex justify-between px-4 py-3 rounded-2xl font-bold ${activeCategory===c.id?'gradient-primary text-white':'bg-white'}`;
+b.onclick=()=>{activeCategory=c.id;renderNav();renderTasks();};
+b.innerHTML=`<span>${c.name}</span><span>${getTaskCount(c.id)}</span>`;
+categoryNav.appendChild(b);
+});
+}
+
+function getTaskCount(id){return id==='all'?tasks.length:tasks.filter(t=>t.category===id).length;}
+
+function renderTasks(){
+const f=tasks.filter(t=>(activeCategory==='all'||t.category===activeCategory)&&
+(t.title.toLowerCase().includes(searchQuery.toLowerCase())));
+viewTitle.textContent=CATEGORIES.find(c=>c.id===activeCategory).name;
+viewSubtitle.textContent=`${f.length} tasks`;
+taskList.innerHTML='';
+f.forEach(t=>{
+const d=document.createElement('div');
+d.className='fade-in bg-white rounded-3xl p-6 hover-lift';
+d.innerHTML=`<h3 class="font-bold">${t.title}</h3><p class="text-sm text-slate-500">${t.description}</p>`;
+taskList.appendChild(d);
+});
+updateProgress();
+}
+
+function updateProgress(){
+const c=tasks.filter(t=>t.completed).length;
+const p=Math.round((c/tasks.length)*100)||0;
+progressPercent.textContent=p+'%';
+progressBar.style.width=p+'%';
+progressStats.textContent=`${c}/${tasks.length} completed`;
+}
+
+function openModal(id=null){editingId=id;modal.classList.remove('hidden');}
+function closeModal(){modal.classList.add('hidden');}
+function updatePriorityUI(){}
+
+function saveTask(){
+tasks.unshift({
+id:Date.now(),
+title:formTitle.value,
+description:formDesc.value,
+category:formCategory.value,
+dueDate:formDate.value,
+priority:selectedPriority,
+completed:false
+});
+closeModal();renderTasks();renderNav();
+}
+
+init();
+</script>
+</body>
+</html>
